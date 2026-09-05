@@ -1,4 +1,3 @@
-//your code here
 const imageClasses = ['img1', 'img2', 'img3', 'img4', 'img5'];
 const container = document.getElementById('flex-container');
 const resetButton = document.getElementById('reset');
@@ -8,18 +7,21 @@ const h3Header = document.getElementById('h');
 
 let selectedImages = [];
 
-// Initialize and generate tiles
 function init() {
   container.innerHTML = '';
   selectedImages = [];
   
-  // Reset buttons & text state
+  // Hide buttons & clear result text
   resetButton.style.display = 'none';
   verifyButton.style.display = 'none';
   para.innerText = '';
-  h3Header.innerText = 'Please click on the identical tiles to verify that you are not a robot.';
 
-  // Select 1 random image to duplicate
+  // Explicitly ensure the h3 text is set to the required message
+  if (h3Header) {
+    h3Header.innerText = 'Please click on the identical tiles to verify that you are not a robot.';
+  }
+
+  // Select 1 random image class to duplicate
   const duplicateIndex = Math.floor(Math.random() * imageClasses.length);
   const sixImages = [...imageClasses, imageClasses[duplicateIndex]];
 
@@ -45,7 +47,7 @@ function init() {
 function handleImageClick(e) {
   const clickedImg = e.target;
 
-  // Prevent selecting already selected image or clicking after 2 selections
+  // Prevent selecting an already selected image or selecting more than 2 images
   if (clickedImg.classList.contains('selected') || selectedImages.length >= 2) {
     return;
   }
@@ -66,7 +68,7 @@ function handleImageClick(e) {
   }
 }
 
-// State 4: Handle verification
+// Handle verification
 verifyButton.addEventListener('click', () => {
   verifyButton.style.display = 'none';
 
@@ -78,8 +80,8 @@ verifyButton.addEventListener('click', () => {
   }
 });
 
-// Reset event handler
+// Reset event listener
 resetButton.addEventListener('click', init);
 
-// Run on page load
+// Run initial setup
 init();
